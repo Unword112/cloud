@@ -38,6 +38,18 @@ exports.remove = (req, res) => {
     }
     res.json({
       message: 'category deleted successfully'
-    })
-  })
+    });
+  });
 }
+
+exports.read = (req, res) => {
+    const slug = req.params.slug.toLowerCase();
+    Category.findOne({ slug }).exec((err, category) => {
+        if (err) {
+            return res.status(400).json({
+                err
+            });
+        }
+        res.json(category);
+    });
+};
